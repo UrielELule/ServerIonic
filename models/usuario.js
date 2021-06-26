@@ -4,16 +4,16 @@ const UsuarioSchema = Schema({
 
     nombre: {
         type: String,
-        require: [ true, 'El nombre es obligatorio' ]
+        require: [true, 'El nombre es obligatorio']
     },
     correo: {
         type: String,
-        require: [ true, 'El correo es obligatorio' ],
+        require: [true, 'El correo es obligatorio'],
         unique: true
     },
-    password:{
+    password: {
         type: String,
-        require: [ true, 'Campo Obligatorio' ],
+        require: [true, 'Campo Obligatorio'],
     },
     img: {
         type: String,
@@ -21,7 +21,7 @@ const UsuarioSchema = Schema({
     role: {
         type: String,
         require: true,
-        emun: ['ADMIN_ROLE', 'OPERADOR_ROLE', 'OPERACION_ROLE' ]
+        emun: ['ADMIN_ROLE', 'OPERADOR_ROLE', 'OPERACION_ROLE']
     },
     estado: {
         type: Boolean,
@@ -37,10 +37,10 @@ const UsuarioSchema = Schema({
 
 //METODOS
 UsuarioSchema.methods.toJSON = function() {
-    const { __v, password, ...usuario } = this.toObject(); //sacamos la version y el password e unificamos los sobrantes en usuario para evitar verlos en las peticiones
+    const { __v, password, _id, ...usuario } = this.toObject(); //sacamos la version y el password e unificamos los sobrantes en usuario para evitar verlos en las peticiones
+    usuario.uid = _id; //asi cambiamos el nombre de dato de la peticion
     return usuario;
 }
 
 
-module.exports = model( 'Usuario', UsuarioSchema );
-
+module.exports = model('Usuario', UsuarioSchema);
